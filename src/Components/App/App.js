@@ -88,7 +88,7 @@ class App extends Component {
                     </NavItem>
 
                     <NavDropdown title="Statistics">
-                        <MenuItem>Display None</MenuItem>
+                        <MenuItem>Show None</MenuItem>
                         <MenuItem>Closeness Centrality</MenuItem>
                         <MenuItem>Betweenness Centrality</MenuItem>
                         <MenuItem>Closeness Centrality</MenuItem>
@@ -107,9 +107,9 @@ class App extends Component {
                 </Navbar>
 
                 {
-                    (!this.props.state.graph) 
+                    (!this.props.state.loadedGraph) 
                         ? 
-                            <div style={{textAlign: 'center', marginTop: '60px'}}>
+                            <div style={{textAlign: 'center', marginTop: '60px'}}> 
                                 <h1>No Graph!</h1>
                                 <p>Use <b>Import Graph</b> to load in a Graph to view.</p>
                             </div>
@@ -117,7 +117,7 @@ class App extends Component {
                             <Graph 
                                 style={{
                                     width: '100vw',
-                                    height: '100%',
+                                    height: 'calc(100% - 50px)',
                                 }}
                                 graph={this.graph} 
                                 options={this.getOptions()} 

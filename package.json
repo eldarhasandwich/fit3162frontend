@@ -1,5 +1,6 @@
 {
   "name": "fit3161frontend",
+  "homepage": "http://eldarhasandwich.github.io/fit3162frontend",
   "version": "0.1.1",
   "private": true,
   "dependencies": {
@@ -19,6 +20,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.2.0"
   }
 }
