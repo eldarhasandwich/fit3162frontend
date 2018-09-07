@@ -11,7 +11,7 @@ class App extends Component {
                     style={{textAlign:"center", marginBottom:"2px"}}
                 >
                     <code>
-                        react-redux-boilerplate
+                        FIT3162 Frontend
                     </code>
                 </h1>
 
