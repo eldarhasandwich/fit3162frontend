@@ -1,12 +1,13 @@
 const defaultState = {
-
+    loadedGraph: null
 }
 
 const state = (state = defaultState, action) => {
     switch (action.type) {
-        case 'EXAMPLE_ACTION': {
+        case 'LOAD_IN_GRAPH': {
             return {
-                ...state
+                ...state,
+                loadedGraph: action.graph
             }
         }
 

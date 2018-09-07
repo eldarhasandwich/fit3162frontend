@@ -3,12 +3,34 @@ import {connect} from 'react-redux'
 
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap/lib'
 import Graph from 'react-graph-vis'
+import ImportGraphModal from './ImportGraphModal';
 
 class App extends Component {
 
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            importModalVisible: false,
+            hierarchicalLayout: false
+        }
+    }
+
+    openImportModal = () => {
+        this.setState({importModalVisible: true})
+    }
+
+    closeImportModal = () => {
+        this.setState({importModalVisible: false})
+    }
+
+    toggleHierarchicalLayout = () => {
+        this.setState({hierarchicalLayout: !this.state.hierarchicalLayout})
+    }
+
     graph = {
         nodes: [
-            {id: 1, label: 'Node 1'},
+            {id: 1, label: 'jimmyboy@enron'},
             {id: 2, label: 'Node 2'},
             {id: 3, label: 'Node 3'},
             {id: 4, label: 'Node 4'},
@@ -22,12 +44,14 @@ class App extends Component {
         ]
     };
       
-    options = {
-        layout: {
-            hierarchical: false
-        },
-        edges: {
-            color: "#000000"
+    getOptions = () => {
+        return {
+            layout: {
+                hierarchical: this.state.hierarchicalLayout
+            },
+            edges: {
+                color: "#000000"
+            }
         }
     };
       
@@ -43,6 +67,11 @@ class App extends Component {
                 height: '100vh',
                 width: '100vw',
             }}>
+                <ImportGraphModal
+                    show={this.state.importModalVisible}
+                    onHide={this.closeImportModal}
+                />
+
                 <Navbar inverse style={{
                     borderRadius: '0',
                     height: '50px',
@@ -54,30 +83,47 @@ class App extends Component {
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
-                    <NavItem>
+                    <NavItem onClick={this.openImportModal}>
                         Import Graph
                     </NavItem>
 
                     <NavDropdown title="Statistics">
+                        <MenuItem>Display None</MenuItem>
                         <MenuItem>Closeness Centrality</MenuItem>
                         <MenuItem>Betweenness Centrality</MenuItem>
                         <MenuItem>Closeness Centrality</MenuItem>
                         <MenuItem>Closeness Centrality</MenuItem>
                         <MenuItem>Closeness Centrality</MenuItem>                        
                     </NavDropdown>
+
+                    <NavDropdown title="Display Options">
+                        <MenuItem 
+                            onClick={this.toggleHierarchicalLayout}>
+                                {(this.state.hierarchicalLayout) ? 'Disable Hierarchical Layout' : 'Enable Hierarchical Layout'}
+                        </MenuItem>                        
+                    </NavDropdown>
                 </Nav>
                 <Navbar.Text pullRight>Made by Eldar and Andrew</Navbar.Text>
                 </Navbar>
 
-                <Graph 
-                    style={{
-                        width: '100vw',
-                        height: '100%',
-                    }}
-                    graph={this.graph} 
-                    options={this.options} 
-                    events={this.events}
-                />
+                {
+                    (!this.props.state.graph) 
+                        ? 
+                            <div style={{textAlign: 'center', marginTop: '60px'}}>
+                                <h1>No Graph!</h1>
+                                <p>Use <b>Import Graph</b> to load in a Graph to view.</p>
+                            </div>
+                        :
+                            <Graph 
+                                style={{
+                                    width: '100vw',
+                                    height: '100%',
+                                }}
+                                graph={this.graph} 
+                                options={this.getOptions()} 
+                                events={this.events}
+                            />
+                }
 
             </div>
         );
@@ -85,7 +131,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-    return {}
+    return {state: state.state}
 }
 
 const mapDispatchToProps = dispatch => {

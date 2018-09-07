@@ -1,7 +1,8 @@
 
 export function exampleAction (example) {
     return {
-        type: "EXAMPLE_ACTION",
-        example
+        type: "LOAD_IN_GRAPH",
+        graph
     }
 }
+
