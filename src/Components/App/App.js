@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap/lib'
-import Graph from 'react-graph-vis'
+import { Graph } from 'react-d3-graph'
 import ImportGraphModal from './ImportGraphModal';
 
 class App extends Component {
@@ -28,20 +28,9 @@ class App extends Component {
         this.setState({hierarchicalLayout: !this.state.hierarchicalLayout})
     }
 
-    graph = {
-        nodes: [
-            {id: 1, label: 'jimmyboy@enron'},
-            {id: 2, label: 'Node 2'},
-            {id: 3, label: 'Node 3'},
-            {id: 4, label: 'Node 4'},
-            {id: 5, label: 'Node 5'}
-        ],
-        edges: [
-            {from: 1, to: 2},
-            {from: 1, to: 3},
-            {from: 2, to: 4},
-            {from: 2, to: 5}
-        ]
+    data = {
+        nodes: [{ id: 'Harry' }, { id: 'Sally' }, { id: 'Alice' }],
+        links: [{ source: 'Harry', target: 'Sally' }, { source: 'Harry', target: 'Alice' }]
     };
       
     getOptions = () => {
@@ -115,13 +104,12 @@ class App extends Component {
                             </div>
                         :
                             <Graph 
-                                style={{
-                                    width: '100vw',
-                                    height: 'calc(100% - 50px)',
+                                config={{
+                                    width:window.innerWidth,
+                                    height:window.innerHeight - 50
                                 }}
-                                graph={this.graph} 
-                                options={this.getOptions()} 
-                                events={this.events}
+                                id="graph-id"
+                                data={this.props.state.loadedGraph}
                             />
                 }
 
